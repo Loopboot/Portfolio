@@ -27,12 +27,14 @@ RUN pnpm run build
 # Production stage - PHP with Apache
 FROM php:8.4-apache
 
-# Install system dependencies
+# Install system dependencies including SQLite
 RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip \
     unzip \
-    && docker-php-ext-install zip \
+    sqlite3 \
+    libsqlite3-dev \
+    && docker-php-ext-install zip pdo pdo_sqlite \
     && a2enmod rewrite \
     && rm -rf /var/lib/apt/lists/*
 
@@ -50,9 +52,15 @@ COPY --from=frontend-builder /app/public/build ./public/build
 # Install PHP dependencies (production only)
 RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
+# Create SQLite database and run migrations
+RUN touch /var/www/html/database/database.sqlite && \
+    chown www-data:www-data /var/www/html/database/database.sqlite && \
+    chmod 664 /var/www/html/database/database.sqlite
+
 # Set proper permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
-    chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database && \
+    chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache && \
+    chmod 775 /var/www/html/database
 
 # Configure Apache
 RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf && \
@@ -62,6 +70,7 @@ RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available
 # Setup Laravel
 RUN if [ ! -f .env ]; then cp .env.example .env; fi && \
     php artisan key:generate --ansi && \
+    php artisan migrate --force --no-interaction && \
     php artisan config:cache && \
     php artisan route:cache && \
     php artisan view:cache

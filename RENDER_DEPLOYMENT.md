@@ -32,7 +32,7 @@ git push origin main
    
    **Start Command**: *(Leave empty - uses CMD from Dockerfile)*
 
-### 3. Environment Variables (Optional)
+### 3. Environment Variables (Required)
 
 Add these in Render dashboard under "Environment":
 
@@ -40,9 +40,12 @@ Add these in Render dashboard under "Environment":
 APP_ENV=production
 APP_DEBUG=false
 APP_KEY=base64:YOUR_KEY_HERE
+DB_CONNECTION=sqlite
+SESSION_DRIVER=database
+CACHE_STORE=database
 ```
 
-> **Note:** The Dockerfile auto-generates APP_KEY if not provided.
+> **Note:** The Dockerfile auto-generates APP_KEY if not provided and creates the SQLite database.
 
 ### 4. Deploy
 
