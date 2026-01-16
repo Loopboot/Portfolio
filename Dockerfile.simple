@@ -1,0 +1,38 @@
+# Simple production Dockerfile - Build assets locally first with: npm run build
+FROM php:8.2-apache
+
+# Install minimal dependencies
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    zip \
+    && docker-php-ext-install zip \
+    && a2enmod rewrite \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy Composer from official image
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html
+
+# Copy all application files
+COPY . .
+
+# Install PHP dependencies (no dev packages)
+RUN composer install --no-dev --optimize-autoloader --no-interaction || true
+
+# Set permissions
+RUN chown -R www-data:www-data storage bootstrap/cache && \
+    chmod -R 775 storage bootstrap/cache
+
+# Configure Apache
+RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf && \
+    echo '<Directory /var/www/html/public>\n    AllowOverride All\n</Directory>' >> /etc/apache2/apache2.conf
+
+# Setup Laravel (copy .env if needed and optimize)
+RUN if [ ! -f .env ]; then cp .env.example .env; fi && \
+    php artisan key:generate --ansi || true && \
+    php artisan optimize || true
+
+EXPOSE 80
+
+CMD ["apache2-foreground"]
