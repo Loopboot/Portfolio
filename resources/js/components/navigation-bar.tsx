@@ -1,41 +1,64 @@
-import { cn } from "@/lib/utils";
-import { FloatingDock } from "./ui/floating-dock";
-import {House, SquareTerminal, Info, Contact2Icon} from "lucide-react"
-export function NavigationBar({className, ...props}: React.ComponentProps<"nav">){
+import { cn } from '@/lib/utils';
+import { Link } from '@inertiajs/react';
+import { Contact2Icon, House, Info, SquareTerminal } from 'lucide-react';
+import { FloatingDock } from './ui/floating-dock';
+import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from './ui/navigation-menu';
+export function NavigationBarFloat({ className, ...props }: React.ComponentProps<'nav'>) {
     const links = [
         {
-            title: "Home",
-            icon: (
-                <House/>
-            ),
-            href: "#",
+            title: 'Home',
+            icon: <House />,
+            href: '/',
         },
         {
-            title: "Projects",
-            icon: (
-            <SquareTerminal/>),
-            href: "#"
-        },
-                {
-            title: "About",
-            icon: (
-            <Info/>),
-            href: "#"
+            title: 'Projects',
+            icon: <SquareTerminal />,
+            href: '/projects',
         },
         {
-            title: "Contact",
-            icon: (
-            <Contact2Icon/>),
-            href: "#"
-        }
+            title: 'About',
+            icon: <Info />,
+            href: '/about',
+        },
+        {
+            title: 'Contact',
+            icon: <Contact2Icon />,
+            href: '/contact',
+        },
+    ];
 
+    return (
+        <nav className={cn(className, 'absolute flex items-center')}>
+            <FloatingDock items={links} desktopClassName="shadow-md" />
+        </nav>
+    );
+}
 
-
-    ]
-
-
-    return <nav className={cn(className, "absolute flex items-center")} >
-
-        <FloatingDock items={links} />
-    </nav>
+export function NavigationBar() {
+    return (
+        <NavigationMenu className="rounded-md border shadow-md">
+            <NavigationMenuList>
+                <NavigationMenuItem>
+                    <NavigationMenuLink asChild>
+                        <Link href="/">Home</Link>
+                    </NavigationMenuLink>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                    <NavigationMenuLink asChild>
+                        <Link href="/projects">Projects</Link>
+                    </NavigationMenuLink>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                    <NavigationMenuLink asChild>
+                        <Link href="/about">About</Link>
+                    </NavigationMenuLink>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                    <NavigationMenuLink asChild>
+                        <Link href="/contact">Contact</Link>
+                    </NavigationMenuLink>
+                </NavigationMenuItem>
+            </NavigationMenuList>
+        </NavigationMenu>
+    );
 }

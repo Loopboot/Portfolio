@@ -5,17 +5,17 @@ import { cn } from "@/lib/utils";
 export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
   const rows = new Array(150).fill(1);
   const cols = new Array(100).fill(1);
-  let colors = [
-    "#93c5fd",
-    "#f9a8d4",
-    "#86efac",
-    "#fde047",
-    "#fca5a5",
-    "#d8b4fe",
-    "#93c5fd",
-    "#a5b4fc",
-    "#c4b5fd",
-  ];
+let colors = [
+  "#2563eb", // bold blue
+  "#16a34a", // vivid green
+  "#dc2626", // strong red
+  "#f59e0b", // amber
+  "#8b5cf6", // violet
+  "#14b8a6", // teal
+  "#f472b6", // pink
+  "#facc15", // bright yellow
+  "#22c55e", // lime
+];
   const getRandomColor = () => {
     return colors[Math.floor(Math.random() * colors.length)];
   };

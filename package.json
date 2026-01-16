@@ -30,7 +30,9 @@
     },
     "dependencies": {
         "@inertiajs/react": "^2.3.7",
+        "@radix-ui/react-direction": "^1.1.1",
         "@radix-ui/react-dropdown-menu": "^2.1.16",
+        "@radix-ui/react-navigation-menu": "^1.2.14",
         "@radix-ui/react-slot": "^1.2.4",
         "@radix-ui/react-switch": "^1.2.6",
         "@tabler/icons-react": "^3.36.1",

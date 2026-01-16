@@ -15,10 +15,8 @@ createInertiaApp({
 
         root.render(
             <ThemeProvider>
-
-            <App {...props} />
-
-            </ThemeProvider>
+                <App {...props} />
+            </ThemeProvider>,
         );
     },
     progress: {
