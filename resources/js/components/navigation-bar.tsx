@@ -36,7 +36,7 @@ export function NavigationBarFloat({ className, ...props }: React.ComponentProps
 
 export function NavigationBar() {
     return (
-        <NavigationMenu className="rounded-md border shadow-md">
+        <NavigationMenu className="rounded-md border bg-background/20 shadow-md">
             <NavigationMenuList>
                 <NavigationMenuItem>
                     <NavigationMenuLink asChild>
