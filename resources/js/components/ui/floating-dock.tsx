@@ -162,7 +162,7 @@ function IconContainer({
   const [hovered, setHovered] = useState(false);
 
   return (
-    <Link href={href}>
+    <a href={href}>
       <motion.div
         ref={ref}
         style={{ width, height }}
@@ -189,6 +189,6 @@ function IconContainer({
           {icon}
         </motion.div>
       </motion.div>
-    </Link>
+    </a>
   );
 }

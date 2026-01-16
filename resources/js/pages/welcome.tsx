@@ -27,7 +27,7 @@ export default function Welcome() {
                             </p>
                         </div>
                     </main>
-                    <NavigationBarFloat className="bottom-4 z-50" />
+                    <NavigationBarFloat className="fixed! bottom-4 z-50" />
                     <div className="absolute top-4 right-4 z-50">
                         <ModeToggle />
                     </div>

@@ -35,9 +35,11 @@ export function ProjectTimeline({ timelineItems }: TimelineItem) {
                         <TimelineConnector />
                         <TimelineContent>
                             <TimelineHeader>
-                                <TimelineTime dateTime={item.dateTime}>{item.date}</TimelineTime>
+                                <TimelineTime className="text-md" dateTime={item.dateTime}>
+                                    {item.date}
+                                </TimelineTime>
 
-                                <TimelineTitle>
+                                <TimelineTitle className='text-lg'>
                                     {item.link ? (
                                         <Tooltip>
                                             <TooltipTrigger asChild className="hover:underline">
@@ -51,7 +53,7 @@ export function ProjectTimeline({ timelineItems }: TimelineItem) {
                                 </TimelineTitle>
                             </TimelineHeader>
 
-                            <TimelineDescription>
+                            <TimelineDescription className="text-md">
                                 <p>{item.description}</p>
 
                                 <ul className={`flex flex-wrap gap-5 ${isRight ? 'justify-start' : 'justify-end'}`}>

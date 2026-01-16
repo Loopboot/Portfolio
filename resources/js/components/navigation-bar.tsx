@@ -1,34 +1,41 @@
 import { cn } from '@/lib/utils';
-import { Link } from '@inertiajs/react';
 import { Contact2Icon, House, Info, SquareTerminal } from 'lucide-react';
 import { FloatingDock } from './ui/floating-dock';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from './ui/navigation-menu';
+
+const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+};
+
 export function NavigationBarFloat({ className, ...props }: React.ComponentProps<'nav'>) {
     const links = [
         {
             title: 'Home',
             icon: <House />,
-            href: '/',
-        },
-        {
-            title: 'Projects',
-            icon: <SquareTerminal />,
-            href: '/projects',
+            href: '#home',
         },
         {
             title: 'About',
             icon: <Info />,
-            href: '/about',
+            href: '#about',
+        },
+        {
+            title: 'Projects',
+            icon: <SquareTerminal />,
+            href: '#projects',
         },
         {
             title: 'Contact',
             icon: <Contact2Icon />,
-            href: '/contact',
+            href: '#contact',
         },
     ];
 
     return (
-        <nav className={cn(className, 'absolute flex items-center')}>
+        <nav className={cn(className, 'fixed flex items-center')}>
             <FloatingDock items={links} desktopClassName="shadow-md" />
         </nav>
     );
@@ -40,22 +47,54 @@ export function NavigationBar() {
             <NavigationMenuList>
                 <NavigationMenuItem>
                     <NavigationMenuLink asChild>
-                        <Link href="/">Home</Link>
+                        <a
+                            href="#home"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                scrollToSection('home');
+                            }}
+                        >
+                            Home
+                        </a>
                     </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                     <NavigationMenuLink asChild>
-                        <Link href="/projects">Projects</Link>
+                        <a
+                            href="#about"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                scrollToSection('about');
+                            }}
+                        >
+                            About
+                        </a>
                     </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                     <NavigationMenuLink asChild>
-                        <Link href="/about">About</Link>
+                        <a
+                            href="#projects"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                scrollToSection('projects');
+                            }}
+                        >
+                            Projects
+                        </a>
                     </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                     <NavigationMenuLink asChild>
-                        <Link href="/contact">Contact</Link>
+                        <a
+                            href="#contact"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                scrollToSection('contact');
+                            }}
+                        >
+                            Contact
+                        </a>
                     </NavigationMenuLink>
                 </NavigationMenuItem>
             </NavigationMenuList>
